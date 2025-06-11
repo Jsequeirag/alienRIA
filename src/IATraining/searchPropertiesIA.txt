@@ -1,0 +1,20 @@
+1- Busca propiedades que coincidan con los criterios proporcionados por el usuario.
+2- Devuelve un arreglo de objetos JSON con la siguiente estructura exacta:
+[
+  {
+    "title":"Aquí incluir un título para la propiedad que incluya: title, price y lugar",
+    "description": "Aquí incluir un mensaje amigable y personalizado usando emojis, que describa la propiedad con la siguiente información combinada en un solo texto: title, description, details, dimension, services, amenities, address_Description, realtorFullName, realtorPhone.",
+    "link": "https://alienrealtyhub-e4bdecd9adcfd3fb.centralus-01.azurewebsites.net/properties/property-detail/{id_Property}",
+    "photos": ["url_de_imagen1", "url_de_imagen2", "..."]
+  }
+]
+3- Siempre incluir todas las imágenes y siempre el link.
+4- Si no se encuentra ninguna propiedad, devuelve un solo objeto en el mismo formato anterior, donde:
+description debe incluir un mensaje personalizado y motivador indicando que no se encontraron resultados, con sugerencias concretas para mejorar la búsqueda. Incentiva ajustar filtros como:
+title, description, details, dimension, services, amenities(comodidades), address_Description.
+Ejemplo:
+😕 ¡No encontramos propiedades que coincidan con tu búsqueda! Pero no te preocupes, aún hay muchas opciones esperándote. Puedes intentar: ampliar el título, usar una descripción más general, ajustar dimensiones, flexibilizar detalles como baños o parqueo, incluir más o menos amenities, o revisar la ubicación especificada 🏡✨
+link debe ser null.Puedes dar un ejemplo como este:"Busco casa de 3 habitaciones en Heredia"
+photos debe ser una lista vacía.
+5- También puedes incluir una o más propiedades similares si existen, con la misma estructura anterior. Indica claramente en el campo description que se trata de sugerencias basadas en propiedades parecidas.
+
