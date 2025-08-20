@@ -41,87 +41,99 @@ app.get("/", (req, res) => {
 
 // Endpoint POST
 app.post("/searchPropertiesIAPowered", async (req, res) => {
-  const chatSession = AIModel.startChat({
-    systemInstruction: {
-      parts: [{ text: decisionsTxt }],
-    },
-  });
-  const result = await chatSession.sendMessage(req.body.message);
-  console.log("result: " + result.response.text().trim());
-  switch (result.response.text().trim()) {
-    case "Greeting":
-      const chatSession = AIModel.startChat({
-        systemInstruction: {
-          parts: [{ text: greetingsTxt }],
-        },
-      });
-      const greetingsResult = await chatSession.sendMessage(req.body.message);
+  try {
+    const chatSession = AIModel.startChat({
+      systemInstruction: {
+        parts: [{ text: decisionsTxt }],
+      },
+    });
+    const result = await chatSession.sendMessage(req.body.message);
+    console.log("result: " + result.response.text().trim());
+    switch (result.response.text().trim()) {
+      case "Greeting":
+        const chatSession = AIModel.startChat({
+          systemInstruction: {
+            parts: [{ text: greetingsTxt }],
+          },
+        });
+        const greetingsResult = await chatSession.sendMessage(req.body.message);
 
-      return res.json(greetingsResult.response.text().trim());
+        return res.json(greetingsResult.response.text().trim());
 
-    case "Direct property inquiry":
-      const properties = await getAllAvailableProperties();
-      const propertiesDtos = PropiedadDTOs(properties);
-      const serachPropertiesInstruction = [
-        "según la siguiente información, que es un array de JSON con propiedades ubicacadas en el País Costa Rica:",
-        JSON.stringify(propertiesDtos),
-      ].join("\n");
-      // Inicia el chat con instrucciones del sistema
-      const chatSessionSearchProperties = AIModel.startChat({
-        systemInstruction: {
-          parts: [{ text: serachPropertiesInstruction }],
-        },
-      });
+      case "Direct property inquiry":
+        const properties = await getAllAvailableProperties();
+        const propertiesDtos = PropiedadDTOs(properties);
+        const serachPropertiesInstruction = [
+          "según la siguiente información, que es un array de JSON con propiedades ubicacadas en el País Costa Rica:",
+          JSON.stringify(propertiesDtos),
+        ].join("\n");
+        // Inicia el chat con instrucciones del sistema
+        const chatSessionSearchProperties = AIModel.startChat({
+          systemInstruction: {
+            parts: [{ text: serachPropertiesInstruction }],
+          },
+        });
 
-      const searchPropertiesResult =
-        await chatSessionSearchProperties.sendMessage(
-          [searchPropertiesIATxt, req.body.message].join("\n")
+        const searchPropertiesResult =
+          await chatSessionSearchProperties.sendMessage(
+            [searchPropertiesIATxt, req.body.message].join("\n")
+          );
+
+        const json = getArrayJSON(searchPropertiesResult.response.text());
+
+        return res.json(json);
+
+      case "Indirect property inquiry":
+        // Inicia el chat con instrucciones del sistema
+        const indirectProperties = await getAllAvailableProperties();
+        const indirectpropertiesDtos = PropiedadDTOs(indirectProperties);
+        const indirectSearchPropertiesInstruction = [
+          "según la siguiente información, que es un array de JSON con propiedades ubicacadas en el País Costa Rica:",
+          JSON.stringify(indirectpropertiesDtos),
+        ].join("\n");
+        const indirectPropertyInquiryChatSession = AIModel.startChat({
+          systemInstruction: {
+            parts: [{ text: indirectSearchPropertiesInstruction }],
+          },
+        });
+
+        const indirectPropertyInquiryResult =
+          await indirectPropertyInquiryChatSession.sendMessage(
+            [searchPropertiesIATxt, req.body.message].join("\n")
+          );
+
+        const indirectJson = getArrayJSON(
+          indirectPropertyInquiryResult.response.text()
         );
+        return res.json(indirectJson);
+      case "About AlienRealty":
+        console.log("aqui");
+        // Inicia el chat con instrucciones del sistema
+        const alienRealtyInfoChatSession = AIModel.startChat({
+          systemInstruction: {
+            parts: [{ text: alienRealtyInfoTxt }],
+          },
+        });
 
-      const json = getArrayJSON(searchPropertiesResult.response.text());
+        const alienRealtyInfoResult =
+          await alienRealtyInfoChatSession.sendMessage(req.body.message);
+        console.log(alienRealtyInfoResult.response.text().trim());
 
-      return res.json(json);
+        return res.json(alienRealtyInfoResult.response.text().trim());
 
-    case "Indirect property inquiry":
-      // Inicia el chat con instrucciones del sistema
-      const indirectPropertyInquiryChatSession = AIModel.startChat({
-        systemInstruction: {
-          parts: [{ text: indirectPropertyInquiryTxt }],
-        },
-      });
+      case "Out of context":
+        const outOfContextChatSession = AIModel.startChat({
+          systemInstruction: {
+            parts: [{ text: outOfContextTxt }],
+          },
+        });
 
-      const indirectPropertyInquiryResult =
-        await indirectPropertyInquiryChatSession.sendMessage(
+        const outOfContextResult = await outOfContextChatSession.sendMessage(
           [req.body.message].join("\n")
         );
-      return res.json(indirectPropertyInquiryResult.response.text().trim());
-    case "About AlienRealty":
-      console.log("aqui");
-      // Inicia el chat con instrucciones del sistema
-      const alienRealtyInfoChatSession = AIModel.startChat({
-        systemInstruction: {
-          parts: [{ text: alienRealtyInfoTxt }],
-        },
-      });
-
-      const alienRealtyInfoResult =
-        await alienRealtyInfoChatSession.sendMessage(req.body.message);
-      console.log(alienRealtyInfoResult.response.text().trim());
-
-      return res.json(alienRealtyInfoResult.response.text().trim());
-
-    case "Out of context":
-      const outOfContextChatSession = AIModel.startChat({
-        systemInstruction: {
-          parts: [{ text: outOfContextTxt }],
-        },
-      });
-
-      const outOfContextResult = await outOfContextChatSession.sendMessage(
-        [req.body.message].join("\n")
-      );
-      return res.json(outOfContextResult.response.text());
-  }
+        return res.json(outOfContextResult.response.text());
+    }
+  } catch (e) {}
 });
 
 // Iniciar servidor

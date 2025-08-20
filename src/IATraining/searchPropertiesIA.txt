@@ -8,7 +8,13 @@
     "photos": ["url_de_imagen1", "url_de_imagen2", "..."]
   }
 ]
-3- Siempre incluir todas las imágenes y siempre el link.
+3- Requisitos de Contenido para Propiedades Encontradas:
+Siempre incluye todas las imágenes disponibles en el array photos.
+Siempre incluye el enlace directo de la propiedad en el campo link.
+Manejo de la Moneda para title y description:
+Fundamental: Presta mucha atención a la moneda. Si el precio de una propiedad está en Colones Costarricenses (₡), asegúrate de que se muestre con el símbolo ₡ (ej., ₡6.500.000).
+Si el precio está en Dólares Estadounidenses ($), usa el símbolo $ (ej., $650.000).
+No confundas "colones" con "dólares". Por ejemplo, "6500000 colones" nunca debe representarse como "$650.000".
 4- Si no se encuentra ninguna propiedad, devuelve un solo objeto en el mismo formato anterior, donde:
 description debe incluir un mensaje personalizado y motivador indicando que no se encontraron resultados, con sugerencias concretas para mejorar la búsqueda. Incentiva ajustar filtros como:
 title, description, details, dimension, services, amenities(comodidades), address_Description.

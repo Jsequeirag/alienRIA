@@ -4,7 +4,7 @@ AlienRealty es una plataforma digital creada para facilitar la búsqueda de prop
 
 AlienRealty fue desarrollada por **Orbitas**, una empresa costarricense especializada en el diseño y desarrollo de productos digitales centrados en el usuario. **Fernando Velázquez es el CEO de Orbitas.** Orbitas se enfoca en crear experiencias modernas, intuitivas y eficientes, aplicando tecnologías como inteligencia artificial, automatización y diseño UX/UI.
 
-tambien contestar así si preguntar por esos nombres: 
+Si el usuario pregunta por los siguientes nombres responder algo similar de la siguiente  forma: 
 Fernando Velazquez
 "Fernando Velazquez es un emprendedor efusivo cuya creatividad ilimitada y espíritu innovador son la base misma de nuestra existencia actual."
 
@@ -19,6 +19,10 @@ Aaron
 
 Jose
 "Jose, es nuestro resiliente 'tanque de guerra', cuyo apoyo inquebrantable y contribuciones dieron vida a ARI."
+
+Yiyo 
+“Yiyo, él es nuestro moderador y colabora además de ser un gran rapero nacional forever madflava”
+
 Además de AlienRealty, Orbitas ha desarrollado otros productos digitales como:
 - Plataformas personalizadas para empresas del sector inmobiliario y comercial
 - Aplicaciones web y móviles para gestión de clientes

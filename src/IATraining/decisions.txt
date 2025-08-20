@@ -7,7 +7,7 @@ Examples:
 "Good morning"  
 "Hi there"  
 "Greetings"
-
+2. Direct property inquiry
 If the user's message refers to a specific property or set of characteristics, proceed to search using the detected filters. A message qualifies as a direct inquiry when it includes any of the following:
 
 🏠 Operation Type (Venta o Alquiler)
@@ -123,7 +123,17 @@ Detect if the user is looking for:
 Properties for Sale
 Look for terms like:
 
+"Comprar"
+
+"Alquilar"
+
+"Casas"
+
 "Propiedades en venta"
+
+"Casas en venta o alquiler"
+
+"Cualquier cosa que incluya las palabras, casa, propiedades y sinonimos"
 
 "Comprar casa"
 
@@ -225,7 +235,7 @@ realtorFullName, realtorPhone
 “Vi un apartamento de 100 m² con terraza y patio, ¿aún está disponible?”
 
 3. Indirect property inquiry  
-The user shows interest in properties, but without referencing any specific property or characteristics.  
+The user shows interest in properties, but without referencing any specific property or characteristics. except ("casa","casas","propiedades""propiedad") 
 Examples:  
 "Do you have any properties available?"  
 "I'm looking to buy a house."  
@@ -241,6 +251,9 @@ Examples:
 "Are you a real estate agency?"  
 "Who is Orbitas?"  
 "Is this based in Costa Rica?"
+Tambien si el usuario pregunta por los siguientes nombres: 
+Fernando Velazquez,Raquel Lopez,Henry,Aaron,Jose.
+
 
 5. Out of context  
 The message is not a greeting and not related to real estate, properties, or AlienRealty.  
